@@ -1,0 +1,11 @@
+# virtual env
+
+venv/
+
+# database file SQLite
+db.sqlite3
+
+process.txt
+
+*.pyc
+__pycache__/
