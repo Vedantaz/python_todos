@@ -1,0 +1,35 @@
+{% extends 'todos/base.html' %} {% block title %}
+<title>Update Todo</title>
+{% endblock %} {% block content %}
+<div class="container">
+  <h2>Update Todo</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="title"
+        value="{{ todo.title }}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <input
+        type="checkbox"
+        name="isCompleted"
+        {%
+        if
+        todo.isCompleted
+        %}checked{%
+        endif
+        %}
+      />
+      <label>Mark as Completed</label>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+  </form>
+  <a href="{% url 'todos:index' %}" class="btn btn-secondary">Cancel</a>
+</div>
+{% endblock %}
