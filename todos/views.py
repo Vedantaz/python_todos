@@ -7,13 +7,44 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.contrib import messages
-    
+from .forms import CustomUserCreationForm
+from django.contrib.auth import login, authenticate
+
+
 class IndexView(generic.ListView):
     template_name = 'todos/index.html'
     context_object_name = 'todo_list'
 
     def get_queryset(self):
         return ToDo.objects.order_by('created_at')
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'todos/register.html', {'form' : form})
+
+def login(request):
+    if request_method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid:
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'todos/login.html', {'form':form})
+    
+def logout(request):
+    logout(request)
+    return redirect('login')
+
 
 def add(request):
     if(request.method == 'POST'):
