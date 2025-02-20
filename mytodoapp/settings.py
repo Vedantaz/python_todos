@@ -74,7 +74,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mytodoapp.wsgi.application'
 LOGIN_REDIRECT_URL = 'todos:index'
 LOGOUT_REDIRECT_URL = 'todos:login'
-LOGIN_URL = 'todos:login'
+LOGIN_URL = 'todos:register'
 
 
 # Database

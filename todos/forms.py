@@ -10,5 +10,9 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user   #assign to the logged-in user
+        return super().form_valid(form)
+
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(label="Email / Username")
