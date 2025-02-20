@@ -23,8 +23,11 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            print(f"User created: {user}")
             login(request, user)
-            return redirect('home')
+            return redirect('todos:index')
+        else:
+            print("Form is invalid:", form.errors)
     else:
         form = CustomUserCreationForm()
     return render(request, 'todos/register.html', {'form' : form})
@@ -35,16 +38,15 @@ def login(request):
         if form.is_valid:
             user = form.get_user()
             login(request, user)
-            return redirect('home')
+            return redirect('todos:index')
     else:
         form = AuthenticationForm()
 
-    return render(request, 'todos/login.html', {'form':form})
-    
-def logout(request):
-    logout(request)
-    return redirect('login')
+    return render(request, 'todos:login', {'form':form})
 
+def user_logout():
+    logout(request, user)
+    return redirect("todos:index")
 
 def add(request):
     if(request.method == 'POST'):
@@ -73,6 +75,6 @@ def update(request, todo_id):
             todo.isCompleted = isCompleted == 'on'
         
         todo.save()
-        return redirect("todos:index") 
+        return redirect("todos:index")  
        
     return render(request, "todos/update.html", {"todo":todo})

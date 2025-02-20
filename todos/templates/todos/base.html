@@ -22,6 +22,16 @@
     {% block title %} {% endblock %}
   </head>
   <body>
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}!</p>
+    <form action="{% url 'todos:logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Logout</button>
+    </form>
+    {% else %}
+    <a href="{% url 'todos:login' %}">Login</a>
+    <a href="{% url 'todos:register' %}">Register</a>
+    {% endif %}
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
