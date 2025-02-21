@@ -23,11 +23,66 @@
   </head>
   <body>
     {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }}!</p>
-    <form action="{% url 'todos:logout' %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Logout</button>
-    </form>
+    <div
+      class="profile-container"
+      style="display: flex; justify-content: space-between; padding: 10px"
+    >
+      <p
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          justify-self: center;
+          margin-bottom: unset;
+        "
+      >
+        Welcome, {{ user.username }}!
+      </p>
+
+      <div
+        class="buttons-container"
+        style="display: flex; justify-content: space-between"
+      >
+        <a href="{% url 'todos:update_profile' %}">
+          <button
+            class="update-btn"
+            style="
+              padding: 8px 16px;
+              border: none;
+              margin-right: 4px;
+              border-radius: 5px;
+              font-size: 1rem;
+              cursor: pointer;
+              transition: background 0.3s ease-in-out;
+              background: #dc3545;
+              color: white;
+            "
+          >
+            <i class="fas fa-user-edit"></i>
+          </button>
+        </a>
+        <form action="{% url 'todos:logout' %}" method="post">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="logout-btn"
+            style="
+              padding: 8px 16px;
+              border: none;
+              border-radius: 5px;
+              font-size: 1rem;
+              cursor: pointer;
+              transition: background 0.3s ease-in-out;
+              background: #dc3545;
+              color: white;
+            "
+          >
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
     {% else %}
     <a href="{% url 'todos:login' %}">Login</a>
     <a href="{% url 'todos:register' %}">Register</a>
