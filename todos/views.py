@@ -27,7 +27,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            print(f"User created: {user}")
+            messages.success(request, "Registration successful! You can now log in.")
             login(request, user)
             return redirect('todos:index')
         else:
