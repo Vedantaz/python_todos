@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import viewsets
-from .models import ToDo
+from .models import ToDo, UserProfile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.contrib import messages
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserProfileForm
 from django.contrib.auth import login, authenticate
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -38,7 +38,9 @@ def register(request):
 
 def user_login(request):
     if request.method == "POST":
+       
         form = CustomAuthenticationForm(request, data = request.POST)
+
         if form.is_valid():
             user = form.get_user()
             login(request, user)
@@ -85,3 +87,22 @@ def update(request, todo_id):
         return redirect("todos:index")  
        
     return render(request, "todos/update.html", {"todo":todo})
+
+@login_required
+def update_profile(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('todos:index')
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'todos/update_profile.html', {'form': form})        
+
+@login_required
+def profile(request):
+    return render(request, 'todos/profile.html')
+

@@ -74,6 +74,10 @@
           <a href="{% url 'todos:update' todo.id %}" title="Update">
             <i class="fas fa-edit"></i>
           </a>
+
+          <a href="{% url 'todos:update_profile' %}" title="Update Profile">
+            <i class="fas fa-user-edit"></i>
+          </a>
         </div>
         {% endfor %}
       </div>

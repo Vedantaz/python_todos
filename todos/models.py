@@ -19,7 +19,11 @@ class ToDo(models.Model):
     def __str__(self):
         return self.title
 
-class userProfile(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True, null=True)
+    bio = models.TextField(max_length=200, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='pics/', blank=True, null=True)
+    profession = models.TextField(max_length=50, blank=False, null=False)
+
+    def __str__(self):
+        return self.user.username
