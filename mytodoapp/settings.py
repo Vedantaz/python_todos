@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    "tailwind",
     'todos', 
 ]
 
@@ -50,7 +51,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 ROOT_URLCONF = 'mytodoapp.urls'
 
 TEMPLATES = [
@@ -70,6 +73,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mytodoapp.wsgi.application'
+LOGIN_REDIRECT_URL = 'todos:index'
+LOGOUT_REDIRECT_URL = 'todos:login'
+LOGIN_URL = 'todos:register'
 
 
 # Database
